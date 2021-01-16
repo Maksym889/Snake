@@ -9,6 +9,7 @@ body {
   height: 450px;
   width: 700px;
   border: 2px solid black;
+  border-radius: 7px;
   display: flex;
   justify-content: space-between;
 }
@@ -39,13 +40,11 @@ body {
 }
 
 .limit {
-  border: 20px solid rgba(2, 29, 4, 0.92);
-  width: 460px;
-  height: 360px;
-  opacity: 10;
-  position: absolute;
-  top: 77px;
-  left: 125px;
+  border: 1px solid rgba(0, 158, 5, 1);
+  width: 18px;
+  height: 18px;
+  background: rgba(0, 158, 5, 1);
+  float: left;
 }
 
 .markup {
@@ -65,15 +64,12 @@ body {
   border-radius: 6px;
 }
 
-.game-over {
-  position: absolute;
+/* .game-over {
   width: 500px;
   height: 400px;
-  top: 77px;
-  left: 125px;
   opacity: 0;
 }
-
+ */
 
 
 

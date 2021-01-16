@@ -1,0 +1,81 @@
+body {
+  margin: 0, auto;
+}
+
+.main {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 450px;
+  width: 700px;
+  border: 2px solid black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.play{
+  background-color: orange;
+  width: 100px;
+  height: 40px;
+  font-size: 16px;
+  border-radius: 5px;
+  font-weight: bold;
+  position: relative;
+  top: 25px;
+  right: 30px;
+}
+.play:active {
+  top: 24px;
+  box-shadow: 0 0 0 60px rgba(0, 0, 0, 0.05) inset;
+}
+
+.snake-field {
+  background-color: black;
+  width: 500px;
+  height: 400px;
+  position: relative;
+  left: 40px;
+  top: 25px;
+}
+
+.limit {
+  border: 20px solid rgba(2, 29, 4, 0.92);
+  width: 460px;
+  height: 360px;
+  opacity: 10;
+  position: absolute;
+  top: 77px;
+  left: 125px;
+}
+
+.markup {
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.47);
+  opacity: 0.01;
+  float: left;
+}
+
+.snake {
+  width: 16px;
+  height: 16px;
+  border: 2px ridge rgba(36, 168, 0, 1);
+  background-color: rgba(23, 107, 0, 1);
+  opacity: 10;
+  border-radius: 6px;
+}
+
+.game-over {
+  position: absolute;
+  width: 500px;
+  height: 400px;
+  top: 77px;
+  left: 125px;
+  opacity: 0;
+}
+
+
+
+
+
+

@@ -64,6 +64,15 @@ body {
   border-radius: 6px;
 }
 
+.mouse {
+  width: 16px;
+  height: 16px;
+  border: 2px ridge rgb(191, 196, 189);
+  background-color: rgb(250, 253, 249);
+  opacity: 10;
+  border-radius: 6px;
+}
+
 /* .game-over {
   width: 500px;
   height: 400px;

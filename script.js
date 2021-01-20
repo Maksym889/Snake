@@ -49,16 +49,22 @@ function creationSnake() {
 
 let mark = true;
 let coordinatesSnake = 0;
+let left;
+let right;
+let up;
+let down;
 
 function snakeRight() {
   let timerId = setInterval(() => {
     coordinatesSnake = [
       snakeFigure[0].getAttribute("posX"), snakeFigure[0].getAttribute("posY"),
     ];
+
     if (coordinatesSnake[0] == 23) {
       mark = false;
+      clearTimeout(timerId);
     }
-    if (mark) {
+    else if (mark) {
       snakeFigure[snakeFigure.length - 1].classList.remove("snake");
       snakeFigure.pop();
       snakeFigure[0].classList.remove("snake");
@@ -66,6 +72,10 @@ function snakeRight() {
     
       for (let i = 0; i < snakeFigure.length; i++) {
         snakeFigure[i].classList.add("snake");
+      }
+      if (right == false) {
+        clearTimeout(timerId);
+        mark = true;
       }
     }
     
@@ -79,9 +89,10 @@ function snakeLeft() {
     ];
   
     if (coordinatesSnake[0] == 1) {
+      clearTimeout(timerId);
       mark = false;
     }
-    if (mark) {
+    else if (mark) {
       snakeFigure[snakeFigure.length - 1].classList.remove("snake");
       snakeFigure.pop();
       snakeFigure[0].classList.remove("snake");
@@ -89,6 +100,10 @@ function snakeLeft() {
     
       for (let i = 0; i < snakeFigure.length; i++) {
         snakeFigure[i].classList.add("snake");
+      }
+      if (left == false) {
+        clearTimeout(timerId);
+        mark = true;
       }
     }
   }, 300);
@@ -101,9 +116,9 @@ function snakeDown() {
     ];
   
     if (coordinatesSnake[1] == 1) {
+      clearTimeout(timerId);
       mark = false;
-    }
-    if (mark) {
+    } else if (mark) {
       snakeFigure[snakeFigure.length - 1].classList.remove("snake");
       snakeFigure.pop();
       snakeFigure[0].classList.remove("snake");
@@ -111,6 +126,10 @@ function snakeDown() {
     
       for (let i = 0; i < snakeFigure.length; i++) {
         snakeFigure[i].classList.add("snake");
+      }
+      if (down == false) {
+        clearTimeout(timerId);
+        mark = true;
       }
     }
   }, 300);
@@ -121,11 +140,10 @@ function snakeUp() {
     coordinatesSnake = [
       snakeFigure[0].getAttribute("posX"), snakeFigure[0].getAttribute("posY")
     ];
-  
+
     if (coordinatesSnake[1] == 18) {
       mark = false;
-    }
-    if (mark) {
+    } else if (mark) {
       snakeFigure[snakeFigure.length - 1].classList.remove("snake");
       snakeFigure.pop();
       snakeFigure[0].classList.remove("snake");
@@ -134,9 +152,10 @@ function snakeUp() {
       for (let i = 0; i < snakeFigure.length; i++) {
         snakeFigure[i].classList.add("snake");
       }
-    } else {
-      clearTimeout(timerId);
-      console.log("Game");
+      if (up == false) {
+        clearTimeout(timerId);
+        mark = true;
+      }
     }
   }, 300);
 }
@@ -157,24 +176,41 @@ function randomMouse() {
   }
 }
 
-document.onkeydown = (event) => {
+document.addEventListener("keydown",  (event) => {
   console.log(event)
   switch (event.code) {
     case "ArrowRight":
+      right = true;
+      left = false;
+      up = false;
+      down = false;
       snakeRight();
       break;
     case "ArrowDown":
+      right = false;
+      left = false;
+      up = false;
+      down = true;
       snakeDown();
       break;
     case "ArrowLeft":
+      right = false;
+      left = true;
+      up = false;
+      down = false;
       snakeLeft();
       break;
     case "ArrowUp":
+      right = false;
+      left = false;
+      up = true;
+      down = false;
       snakeUp();
       break;
   }
   return false;
-}
+});
+
 
 // function game(event) {
 //    let timer = setInterval(function () {

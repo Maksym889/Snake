@@ -1,5 +1,5 @@
 let field = document.querySelector(".snake-field");
-
+let elem;
 for (let i = 1; i < 501; i++) {
   elem = document.createElement("div");
   elem.classList.add("markup");
@@ -15,6 +15,7 @@ for (let y = 19; y >= 0; y--) {
     i++;
   }
 }
+
 // добавляем границу поля
 for (let i = 0; i < el.length; i++) {
   if (el[i].getAttribute("posY") == 19 || el[i].getAttribute("posY") == 0 || el[i].getAttribute("posX") == 0 || el[i].getAttribute("posX") == 24) {
@@ -24,7 +25,7 @@ for (let i = 0; i < el.length; i++) {
 }
 
 
-let snakeFigure = 0;
+let snakeFigure;
 // координаты начальной змейки
 function creationSnake() {
   let coordinates = [
@@ -46,7 +47,6 @@ function creationSnake() {
   }
 }
 
-
 let mark = true;
 let coordinatesSnake = 0;
 let left;
@@ -54,12 +54,12 @@ let right;
 let up;
 let down;
 
-function snakeRight() {
+function goRight() {
   let timerId = setInterval(() => {
     coordinatesSnake = [
       snakeFigure[0].getAttribute("posX"), snakeFigure[0].getAttribute("posY"),
     ];
-
+    
     if (coordinatesSnake[0] == 23) {
       mark = false;
       clearTimeout(timerId);
@@ -78,11 +78,10 @@ function snakeRight() {
         mark = true;
       }
     }
-    
   }, 300);
 }
 
-function snakeLeft() {
+function goLeft() {
   let timerId = setInterval(() => {
     coordinatesSnake = [
       snakeFigure[0].getAttribute("posX"), snakeFigure[0].getAttribute("posY")
@@ -109,7 +108,7 @@ function snakeLeft() {
   }, 300);
 }
 
-function snakeDown() {
+function goDown() {
   let timerId = setInterval(() => {
     coordinatesSnake = [
       snakeFigure[0].getAttribute("posX"), snakeFigure[0].getAttribute("posY"),
@@ -135,7 +134,7 @@ function snakeDown() {
   }, 300);
 }
 
-function snakeUp() {
+function goUp() {
   let timerId = setInterval(() => {
     coordinatesSnake = [
       snakeFigure[0].getAttribute("posX"), snakeFigure[0].getAttribute("posY")
@@ -161,99 +160,70 @@ function snakeUp() {
 }
 
 function randomMouse() {
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-  let x = getRandomInt(1, 23);
-  let y = getRandomInt(1, 18);
-  document.querySelector(`[posX="${x}"][posY="${y}"]`).classList.add("mouse");
-  for (let i = 0; i < snakeFigure.length; i++) {
-    if (document.querySelector(`[posX="${x}"][posY="${y}"]`) != snakeFigure[i]) {
-      document.querySelector(`[posX="${x}"][posY="${y}"]`).classList.add("mouse");
+  let arrX = [];
+  let arrY = [];
+  for (let i = 0; i < el.length; i++) {
+    if (el[i].classList.contains("limit") != true && el[i].classList.contains("snake") != true) {
+      arrX.push(el[i].getAttribute("posX"));
+      arrY.push(el[i].getAttribute("posY"));
     }
   }
+  let x = arrX[Math.floor(Math.random() * arrX.length)];
+  let y = arrY[Math.floor(Math.random() * arrY.length)];
+  document.querySelector(`[posX="${x}"][posY="${y}"]`).classList.add("mouse");
+}
+
+function eat() {
+
 }
 
 document.addEventListener("keydown",  (event) => {
-  console.log(event)
   switch (event.code) {
-    case "ArrowRight":
-      right = true;
-      left = false;
+    case "ArrowRight": 
+      if (left == true) {
+        right = false;
+      } else {
+        right = true;
+        goRight();
+      }
       up = false;
       down = false;
-      snakeRight();
       break;
     case "ArrowDown":
+      if (up == true) {
+        down = false;
+      } else {
+        down = true;
+        goDown();
+      }
       right = false;
       left = false;
-      up = false;
-      down = true;
-      snakeDown();
       break;
     case "ArrowLeft":
-      right = false;
-      left = true;
+      if (right == true) {
+        left = false;
+      } else {
+        left = true;
+        goLeft();
+      }
       up = false;
       down = false;
-      snakeLeft();
       break;
     case "ArrowUp":
+      if (down == true) {
+        up = false;
+      } else {
+        up = true;
+        goUp();
+      }
       right = false;
       left = false;
-      up = true;
-      down = false;
-      snakeUp();
       break;
   }
   return false;
 });
 
 
-// function game(event) {
-//    let timer = setInterval(function () {
-//      let mark = true;
-//      let stop = false;
-//     let coordinatesSnake = [
-//       [snakeFigure[0].getAttribute("posX"), snakeFigure[0].getAttribute("posY")],
-//       [snakeFigure[1].getAttribute("posX"), snakeFigure[1].getAttribute("posY")],
-//       [snakeFigure[2].getAttribute("posX"), snakeFigure[2].getAttribute("posY")],
-//       [snakeFigure[3].getAttribute("posX"), snakeFigure[3].getAttribute("posY")],
-//     ];
-  
-//     if (coordinatesSnake[0][1] == 18 || coordinatesSnake[0][0] == 23 || coordinatesSnake[0][1] == 1 || coordinatesSnake[0][0] == 1) {
-//       mark = false;
-//     }
-
-//     if (mark) {
-//       for (let i = 0; i < snakeFigure.length; i++) {
-//         snakeFigure[i].classList.remove("snake");
-//       }
-//       snakeFigure = [
-//         document.querySelector(`[posX="${coordinatesSnake[0][0]}"][posY="${+coordinatesSnake[0][1] + 1}"]`),
-//         document.querySelector(`[posX="${coordinatesSnake[1][0]}"][posY="${+coordinatesSnake[1][1] + 1}"]`),
-//         document.querySelector(`[posX="${coordinatesSnake[2][0]}"][posY="${+coordinatesSnake[2][1] + 1}"]`),
-//         document.querySelector(`[posX="${coordinatesSnake[3][0]}"][posY="${+coordinatesSnake[3][1] + 1}"]`),
-//       ];
-//       for (let i = 0; i < snakeFigure.length; i++) {
-//         snakeFigure[i].classList.add("snake");
-//       }
-//     } else {
-//       console.log("Game over");
-//       for (let i = 0; i < snakeFigure.length; i++) {
-//         if (snakeFigure[i].classList.contains("snake")) {
-//           snakeFigure[i].style.background = "#aa0808";
-//         }
-//       }
-//       clearTimeout(timer);
-//     }
-
-//   },300);
-// }
-
-// document.querySelector('.play').onclick = game;
 
 randomMouse();
 creationSnake();

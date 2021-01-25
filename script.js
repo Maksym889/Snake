@@ -1,5 +1,15 @@
 let field = document.querySelector(".snake-field");
 let elem;
+let mark = true;
+let coordinatesSnake;
+let left;
+let right;
+let up;
+let down;
+let coordinatesMouse;
+let mouse;
+
+
 for (let i = 1; i < 501; i++) {
   elem = document.createElement("div");
   elem.classList.add("markup");
@@ -25,9 +35,9 @@ for (let i = 0; i < el.length; i++) {
 }
 
 
-let snakeFigure;
+// let snakeFigure;
 // координаты начальной змейки
-function creationSnake() {
+
   let coordinates = [
     [12, 11],
     [12, 10],
@@ -35,7 +45,7 @@ function creationSnake() {
     [12, 8]
   ];
 
-  snakeFigure = [
+  let snakeFigure = [
     document.querySelector(`[posX="${coordinates[0][0]}"][posY="${coordinates[0][1]}"]`),
     document.querySelector(`[posX="${coordinates[1][0]}"][posY="${coordinates[1][1]}"]`),
     document.querySelector(`[posX="${coordinates[2][0]}"][posY="${coordinates[2][1]}"]`),
@@ -45,14 +55,41 @@ function creationSnake() {
   for (let i = 0; i < snakeFigure.length; i++) {
     snakeFigure[i].classList.add("snake");
   }
+
+function mouseCreate() {
+  function randomMouse() {
+    let arrX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+    let arrY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+    let x = arrX[Math.floor(Math.random() * arrX.length)];
+    let y = arrY[Math.floor(Math.random() * arrY.length)];
+    return [x, y]
+  }
+
+  let random = randomMouse();
+  mouse = document.querySelector(`[posX="${random[0]}"][posY="${random[1]}"]`);
+
+  while (mouse.classList.contains("snake")) {
+    let random = randomMouse();
+    mouse = document.querySelector(`[posX="${random[0]}"][posY="${random[1]}"]`);
+  }
+  mouse.classList.add("mouse");
+  coordinatesMouse = [mouse.getAttribute("posX"), mouse.getAttribute("posY")];
 }
 
-let mark = true;
-let coordinatesSnake = 0;
-let left;
-let right;
-let up;
-let down;
+function eat() {
+  coordinatesSnake = [snakeFigure[0].getAttribute("posX"), snakeFigure[0].getAttribute("posY"),];
+  if (coordinatesSnake[0] == coordinatesMouse[0] && coordinatesSnake[1] == coordinatesMouse[1]) {
+    mouse.classList.remove("mouse");
+    snakeFigure.push(document.querySelector(`[posX="${coordinatesMouse[0]}"][posY="${coordinatesMouse[1]}"]`))
+    mouseCreate();
+  }
+}
+
+// function snakeBite() {
+//   coordinatesSnake = [snakeFigure[0].getAttribute("posX"), snakeFigure[0].getAttribute("posY"),];
+  
+// }
+  
 
 function goRight() {
   let timerId = setInterval(() => {
@@ -69,7 +106,7 @@ function goRight() {
       snakeFigure.pop();
       snakeFigure[0].classList.remove("snake");
       snakeFigure.unshift(document.querySelector(`[posX="${+coordinatesSnake[0] + 1}"][posY="${+coordinatesSnake[1]}"]`))
-    
+      eat();
       for (let i = 0; i < snakeFigure.length; i++) {
         snakeFigure[i].classList.add("snake");
       }
@@ -96,7 +133,7 @@ function goLeft() {
       snakeFigure.pop();
       snakeFigure[0].classList.remove("snake");
       snakeFigure.unshift(document.querySelector(`[posX="${+coordinatesSnake[0] - 1}"][posY="${+coordinatesSnake[1]}"]`))
-    
+      eat();
       for (let i = 0; i < snakeFigure.length; i++) {
         snakeFigure[i].classList.add("snake");
       }
@@ -122,7 +159,7 @@ function goDown() {
       snakeFigure.pop();
       snakeFigure[0].classList.remove("snake");
       snakeFigure.unshift(document.querySelector(`[posX="${+coordinatesSnake[0]}"][posY="${+coordinatesSnake[1] - 1}"]`))
-    
+      eat();
       for (let i = 0; i < snakeFigure.length; i++) {
         snakeFigure[i].classList.add("snake");
       }
@@ -147,7 +184,7 @@ function goUp() {
       snakeFigure.pop();
       snakeFigure[0].classList.remove("snake");
       snakeFigure.unshift(document.querySelector(`[posX="${+coordinatesSnake[0]}"][posY="${+coordinatesSnake[1] + 1}"]`));
-    
+      eat();
       for (let i = 0; i < snakeFigure.length; i++) {
         snakeFigure[i].classList.add("snake");
       }
@@ -159,23 +196,6 @@ function goUp() {
   }, 300);
 }
 
-function randomMouse() {
-  let arrX = [];
-  let arrY = [];
-  for (let i = 0; i < el.length; i++) {
-    if (el[i].classList.contains("limit") != true && el[i].classList.contains("snake") != true) {
-      arrX.push(el[i].getAttribute("posX"));
-      arrY.push(el[i].getAttribute("posY"));
-    }
-  }
-  let x = arrX[Math.floor(Math.random() * arrX.length)];
-  let y = arrY[Math.floor(Math.random() * arrY.length)];
-  document.querySelector(`[posX="${x}"][posY="${y}"]`).classList.add("mouse");
-}
-
-function eat() {
-
-}
 
 document.addEventListener("keydown",  (event) => {
   switch (event.code) {
@@ -225,5 +245,4 @@ document.addEventListener("keydown",  (event) => {
 
 
 
-randomMouse();
-creationSnake();
+mouseCreate();

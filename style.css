@@ -23,10 +23,28 @@ body {
   font-weight: bold;
   position: relative;
   top: 25px;
-  right: 30px;
+  right: -70px;
 }
+
 .play:active {
   top: 24px;
+  box-shadow: 0 0 0 60px rgba(0, 0, 0, 0.05) inset;
+}
+
+.new-game {
+  background-color: orange;
+  width: 100px;
+  height: 40px;
+  font-size: 16px;
+  border-radius: 5px;
+  font-weight: bold;
+  position: relative;
+  top: 80px;
+  right: 30px;
+}
+
+.new-game:active {
+  top: 79px;
   box-shadow: 0 0 0 60px rgba(0, 0, 0, 0.05) inset;
 }
 
@@ -73,12 +91,15 @@ body {
   border-radius: 6px;
 }
 
-/* .game-over {
-  width: 500px;
-  height: 400px;
-  opacity: 0;
+.game-over {
+  width: 16px;
+  height: 16px;
+  border: 2px ridge rgb(191, 196, 189);
+  background-color: rgb(250, 253, 249);
+  opacity: 10;
+  float: left;
 }
- */
+
 
 
 

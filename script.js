@@ -9,6 +9,7 @@ let down;
 let coordinatesMouse;
 let mouse;
 let flag = 0;
+let count = 0;
 
 
 for (let i = 1; i < 501; i++) {
@@ -220,32 +221,7 @@ function play() {
 }
 
 function newGame() {
-  mark = false;
-  left = false;
-  right = false;
-  up = false;
-  down = false;
-  for (let i = 0; i < snakeFigure.length; i++) {
-    snakeFigure[i].classList.remove("snake");
-  }
-
-  coordinates = [
-    [12, 11],
-    [12, 10],
-    [12, 9],
-    [12, 8]
-  ];
-
-  snakeFigure = [
-    document.querySelector(`[posX="${coordinates[0][0]}"][posY="${coordinates[0][1]}"]`),
-    document.querySelector(`[posX="${coordinates[1][0]}"][posY="${coordinates[1][1]}"]`),
-    document.querySelector(`[posX="${coordinates[2][0]}"][posY="${coordinates[2][1]}"]`),
-    document.querySelector(`[posX="${coordinates[3][0]}"][posY="${coordinates[3][1]}"]`),
-  ];
-  
-  for (let i = 0; i < snakeFigure.length; i++) {
-    snakeFigure[i].classList.add("snake");
-  }
+   window.location.reload()
 }
 
 function turn(event) {
